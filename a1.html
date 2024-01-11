@@ -4,15 +4,64 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, maximum-scale=1.0" />
 
-    <title>Example Student's HCDE 439 Physical Computing Page!</title>
+    <title>Samuel Pina's HCDE 439 Physical Computing Page!</title>
 
     <link href="style.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
-    <h1>Example Student's Assignment 1!</h1>
+    <h1>Samuel Pina's Blink!</h1>
     <div class="header">
-      <img src="red-panda.jpg" />
-      <p>Here is all the documentation for assignment 1!</p>
+      <img src="operation.gif" style="width:600px;height:500px;" />
+      <p>To the left is a gif of my operating circuit where all 3 LED's blink independently.</p>
+      <p>See below all the documentation for Blink!</p>
     </div>
+    <h2>Firmware (code snippet)</h2>
+    <p>
+      <code>
+        // the setup function starts once the arduino is powered or reseted <br>
+        void setup()
+        {<br>
+          // initializing digital pins LED_BUILTIN as an output. <br>
+          pinMode(10, OUTPUT);<br>
+          pinMode(11, OUTPUT);<br>
+          pinMode(12, OUTPUT);<br>
+        }<br>
+        <br>
+        // the loops runs forever as long as board is powered
+        void loop()
+        {<br>
+          digitalWrite(10, HIGH);  // LED #1 turns on <br>
+          digitalWrite(11, LOW);   // LED #2 stays off <br>
+          digitalWrite(12,LOW);    // LED #3 stays off <br>
+          delay(1500);             // Wait for 1.5 seconds <br>
+          digitalWrite(11,HIGH);   // LED #2 turns on <br>
+          digitalWrite(12,LOW);    // LED #3 stays off <br>
+          digitalWrite(10,LOW);    // LED #1 turns off <br>
+          delay(1500);             // Wait for 1.5 seconds <br>
+          digitalWrite(12,HIGH);   // LED #3 turns on <br>
+          digitalWrite(10,LOW);    // LED #1 stays off <br>
+          digitalWrite(11,LOW);    // LED #2 turns off <br>
+          delay(1500);             // wait for 1.5 seconds <br>
+          <br>
+        }<br>
+        
+      </code>
+    </p>
+    <div class="schematic">
+      <img src="BLINK! schematic.jpg" />
+      <p> Schematic view above shows the connections of 3 LED's and 3 resistors (each 220 ohm) to 3 different pins on the arduino board and back to ground.</p>
+    </div>
+    <div class="circuit">
+      <img src="circuit.jpeg" style="width:600px;height: 500px;" />
+      <p> Circuit view above shows the schematic in physical form.</p>
+    </div>
+    <h3> Additional Questions and Answers</h3>
+    <p>1: Draw a graph where the X axis is time and the Y axis is voltage across the LEDs. Draw a line for each of your 3 LEDs. </p>
+    <img src="graph.png" style="width:6000px;height: 500px;" />
+    <p>2: How many LEDs could you blink independently with your Arduino? How much current would that draw? </p>
+    <p> Answer: The most LEDs that could blink indepently with my Arduino is 14 at a current of about 200mA. See my work below. </p>
+    <img src="Blink! Calculations.png" style="width:600px;height: 500px;" />
+    <p>4: How fast do you need to blink your LEDs until you no longer can tell that they are blinking?</p>
+    <p> Answer: I could not tell if they were blinking at a speed of 30ms</p>
   </body>
 </html>
