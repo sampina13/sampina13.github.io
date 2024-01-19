@@ -9,10 +9,38 @@
     <link href="style.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
-    <h1>Example Student's Assignment 2!</h1>
+    <h1>Samuel Pina's Fade! Assignment </h1>
     <div class="header">
       <img src="red-panda.jpg" />
       <p>Here is all the documentation for assignment 2!</p>
     </div>
+    <h2> Firmware </h2>
+    <code>
+      // the setup function starts once the arduino is powered or reseted <br>      
+      void setup() <br>
+      {
+        // initializing digital pins LED_BUILTIN as an output and push button pin as an input. <br>
+        pinMode(10, OUTPUT); <br>
+        pinMode(11, OUTPUT); <br>
+        pinMode(2,INPUT); <br>
+      } 
+      // the loops runs forever as long as board is powered. <br>
+      void loop() { <br>
+        if(digitalRead(2) == LOW) { // reads the push button state, if its not pressed then only one LED is on <br>
+          digitalWrite(11, HIGH); // Green LED is constantly ON when button is unpressed <br> 
+          digitalWrite(10, LOW);  // Blue LED is constantly OFF when button is unpressed <br>
+        } else{ // when the button is pressed, Green LED turns off and the Blue LED turns on and fades away cyclically until button is unpressed. <br>
+           digitalWrite(11, LOW); // Green LED turns off immediately <br>
+           for(int i = 255; i>=0; i-=2){ // loop to start Blue LED fade down <br>
+              analogWrite(10,i); // Blue LED turns on at max brightness and gradually declines <br>
+              delay(22); // delays LED light to see fade <br>
+            }
+            for(int i =0; i<=255; i+=2){ // loop to start Blue LED fade up <br>
+              analogWrite(10,i); //Blue LED turns on at lowest brightness and gradually increases <br>
+              delay(22); // delays LED light to see fade <br>
+            } <br>
+        } <br>
+      }<br>
+    </code>
   </body>
 </html>
