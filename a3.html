@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, maximum-scale=1.0" />
+
+    <title>Example Student's HCDE 439 Physical Computing Page!</title>
+
+    <link href="style.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <h1>Samuel Pina's Fade! Assignment </h1>
+    <div class="header">
+      <img src="A3 operation.gif" style="width:600px;height:500px"; />
+      <p>Here is all the documentation for assignment 3!</p>
+    </div>
+    <h2> Firmware </h2>
+    <code>
+        #include <Servo.h> <br>
+
+            Servo myservo;  // create servo object to control a servo <br>
+            
+            // Define pins <br>
+            int photoresistorPin = A0; // Analog pin where the photoresistor is connected <br>
+            int servoPin = 9;          // Digital pin where the servo motor is connected <br>
+            int ledPin = 3; <br>
+            
+            int lightValue = 0;            // Variable to store the light value <br>
+            int servoPosition = 0;         // Variable to store the servo position <br>
+            int ledBrightness = 0;         // Variable to store the LED brightness <br>
+            int lightMax = 0;              // max light value <br>
+            int lightMin = 1023;           // min light value <br>
+            
+            
+            
+            void setup() { <br>
+            
+              // calibrate first
+              while (millis() < 5000){ <br>
+                lightValue = analogRead(photoresistorPin); <br>
+            
+                if (lightValue > lightMax){ <br>
+                  lightMax = lightValue; <br>
+                } <br>
+                if (lightValue < lightMin){ <br>
+                  lightMin = lightValue; <br>
+                } <br>
+              } <br>
+              myservo.attach(servoPin);  // Attaches the servo on pin 9 to the servo object <br>
+              pinMode(3, OUTPUT);   // Set the LED pin as output <br>
+              Serial.begin(9600);        // Start serial communication at 9600 baud <br>
+            }
+            
+            void loop() {
+              lightValue = analogRead(photoresistorPin);          // Read the value of the photoresistor <br>
+              servoPosition = map(lightValue, 0, 1023, 0, 180);   // Map it to the servo range <br>
+              myservo.write(servoPosition);                       // Set the servo position <br>
+            
+              if (lightValue < lightMin - 10) { <br>
+                // If it's dark, turn on the LED and set brightness based on servo position <br>
+                ledBrightness = map(servoPosition, 0, 180, 0, 255); <br>
+              } else { <br>
+                // If it's bright, turn off the LED
+                ledBrightness = 0; <br>
+              }<br>
+              
+              analogWrite(ledPin, ledBrightness);                 // Set the LED brightness <br>
+            
+              // Print the values to the Serial Monitor <br>
+              Serial.print("Light Value: "); <br>
+              Serial.print(lightValue); <br>
+              Serial.print(" | Servo Position: "); <br>
+              Serial.print(servoPosition); <br>
+              Serial.print(" | LED Brightness: "); <br>
+              Serial.println(ledBrightness); <br>
+              Serial.println(lightMin); <br>
+              Serial.println(lightMax); <br>
+            
+              delay(1000);  // Wait for a second before the next loop <br>
+            }
+             <br>
+        } <br>
+      }<br>
+    </code>
+
+    <img src="A3 circuit.jpg"/>
+    <p> This is a top view of the physical circuit.</p>
+    <img src="A3 schematic.PNG"/>
+    <p> This is a top view of its schematic.</p>
+    <img src="A3 calculations.PNG"/>
+    <p> This is the calculations I did to find the right resistor for the job!</p>
+    <h3>Additional Questions</h3>
+    <p>Q1: In your voltage divider, can the variable resistor be either R1 or R2 or does it need to be one or the other? Justify your answer with example calculations. </p>
+    <img src="A3 AQ1.1.PNG"/>
+    <img src="A3 AQ1.2.PNG"/>
+    <p>Q2: Draw a graph where the x-axis is time and the y-axis is voltage. Plot the voltage at V-measure of your voltage divider of your shared gif.</p>
+    <img src="A3 graph.PNG"/>
+    <p>Assuming the button is pressed the whole time, the circuit would run for about 165.5 hours. </p>
+    <img src="A3 AQ1.2.PNG"/>
+    <p>While the button is not pressed, the circuit would run for about 82.8 hours.</p
+  </body>
+</html>
