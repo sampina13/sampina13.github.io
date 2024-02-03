@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, maximum-scale=1.0" />
+
+    <title>Example Student's HCDE 439 Physical Computing Page!</title>
+
+    <link href="style.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <h1>Samuel Pina's Libraries! Assignment </h1>
+    <div class="header">
+      <img src="A4 operation.gif" style="width:600px;height:500px"; />
+      <p>Here is all the documentation for assignment 4!</p>
+    </div>
+    <h2> Firmware </h2>
+    <code>
+        #include <CapacitiveSensor.h>  // includes library for capacitive sensor to use as the input <br>
+        #include <Servo.h>           // includes library for servo to use as the output <br>
+            
+            int servoMap, sensorValue, sensorMax, sensorMin;   // initializes preliminary variables for mapping <br>
+            Servo myServo;                                     // creates servo object <br>
+            CapacitiveSensor cs_4_2 = CapacitiveSensor(4, 2);  // creates cap sensor object between pins 4 and 2 <br>
+            
+            void setup() {                                  // this runs once when ardiuno is turned on <br>
+            
+              cs_4_2.set_CS_AutocaL_Millis(0xFFFFFFFF);     // autocalibrates cap sensor <br>
+              Serial.begin(9600);                           // begins serial monitor <br>
+              myServo.attach(9);                           // declares servo is attached to pin 9 <br>
+             
+              while (millis() < 5000) {                     // enters 5 second loop to record max and min sensor values for mapping <br>
+            
+                sensorValue = cs_4_2.capacitiveSensor(30);  // takes cap sensor measurement <br>
+            
+                if (sensorValue > sensorMax) {              // checks if measurement is greater than existing max <br>
+                  sensorMax = sensorValue;                  // replaces it if so <br>
+                }
+            
+                if (sensorValue < sensorMin) {  // checks if measurement is less than existing min <br>
+                  sensorMin = sensorValue;      // replaces it if so <br>
+                }
+            
+              }
+            
+            }
+            
+            void loop() {                                 // runs until arduino is turned off <br>
+            
+              long start = millis();                      // records time in milliseconds <br>
+              long total1 = cs_4_2.capacitiveSensor(30);  // records cap sensor measurement 30 times to avoid faulty data <br>
+            
+              if (total1 > 200);                                        // checks if cap sensor is touched <br>
+                servoMap = map(total1, sensorMin, sensorMax, 0, 180);  // maps measurement from input to output for the arduinio <br>
+                myServo.write(servoMap);                               // moves servo with respect to mappedmeasurement <br>
+                delay(150);                                            // 150 millisecond delay <br>
+            
+              Serial.print(millis() - start);  // prints performance measurement in milliseconds <br>
+              Serial.print("\t");              // prints a tab for spacing <br>
+              Serial.println(total1);  // prints measurement from cap sensor <br>
+            
+              delay(100);              // 100 millisecond delay<br>
+            
+            }
+             <br>
+        } <br>
+      }<br>
+    </code>
+
+    <img src="A4_circuit.jpg"/>
+    <p> This is a top view of the physical circuit.</p>
+    <img src="A4 schematic.jpg"/>
+    <p> This is a top view of its schematic.</p>
+    <h3>Additional Questions</h3>
+    <p> Q1: Say you are using a servo motor you attach to pin 9. In your loop() you have the following code: for (int i=0, i<180, i++){servo.write(i); delay(100);} Draw a graph with the X axis in seconds, for two seconds, and the y-axis the voltage at pin 9 with respect to ground. </p>
+    <img src="A3 AQ1.1.PNG"/>
+    <img src="A3 AQ1.2.PNG"/>
+    <p>Q2: Your input device is slightly broken, leading it to give us an erroneous reading 1% of the time. How can we address this? Answer in (pseudo)code. </p>
+    <img src="A3 graph.PNG"/>
+    <p>Q3: Your input device is slightly noisy, leading the measurement to randomly deviate from the true measurement up or down by 10%. How can we address this? Answer in (pseudo)code. </p>
+    <p>Using a 16-bit ADC and 10-bit PWM would change map() code by expanding the range of values since 16-bit ADC would represent values 0 - 65535. </p
+  </body>
+</html>
