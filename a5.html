@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, maximum-scale=1.0" />
+
+    <title>Example Student's HCDE 439 Physical Computing Page!</title>
+
+    <link href="style.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <h1>Samuel Pina's Transistors! Assignment </h1>
+    <div class="header">
+      <img src="A5 operation.PNG" style="width:600px;height:500px"; />
+      <p>Here is all the documentation for assignment 5!</p>
+    </div>
+    <h2> Firmware </h2>
+    <code>
+        #include <CapacitiveSensor.h> <br>
+            // attach capacitive sensor and 1 megaohm resistor to digital pins 4 and 2 for input sensor<br>
+            CapacitiveSensor cs_4_2 = CapacitiveSensor(4,2); <br>
+            // attach LED strip to digital pin 11<br>
+            int led = 11;<br>
+            
+            //runs once <br>
+            void setup() { <br>
+            //prompts the serial monitor<br> 
+            Serial.begin(9600); <br>
+            }<br>
+            
+            //runs forever while turned on<br>
+            void loop() {<br>
+            // returns the number of milliseconds since the device begins running the program<br>
+            long time = millis(); <br>
+            // filters out bad data by running a sensor check 30 times<br>
+            long outputValue = cs_4_2.capacitiveSensor(30); <br>
+
+            // check on performance in milliseconds<br>
+            Serial.print(millis() - time); <br>
+            // table spacing<br>
+            Serial.print("\t"); <br>
+            // print sensor output 1<br>
+            Serial.println(outputValue);<br> 
+            // delay to limit data to serial port<br>
+            delay(10); <br>
+
+            //checks if sensor is touched<br>
+            if (outputValue > 300) { <br>
+                // fade in from min to max in increments of 10 points<br>
+              for (int i = 0; i <= 255; i += 10) { <br>
+                // sets the value to LED strip<br>
+                analogWrite(led, i); <br>
+                // 30 millisecond delay<br>
+                delay(30);<br>
+              }<br>
+
+            // fade out from max to mmin in increments of 10 points<br>
+              for (int i = 255; i <= 0; i -= 10){ <br>
+                // sets the value to LED strip<br>
+                analogWrite(led,i); <br>
+                // 30 millisecond delay<br>
+                delay(30); <br>
+              }<br>
+            }<br>
+            }<br>
+    </code>
+
+    <img src="A5_circuit.PNG"/>
+    <p> This is a top view of the physical circuit.</p>
+    <img src="A5_schematic.PNG"/>
+    <p> This is a top view of its schematic.</p>
+    <h3>Additional Questions</h3>
+    <p> Q1: This is the datasheet for the n-mosfet transistor: https://www.diodes.com/assets/Datasheets/DMT6009LCT.pdLinks to an external site.f What is the absolute maximum amount of current between pins 2 and 3?</p>
+    <p> According to the datasheet, the absolute maximum amount of current between pins 2 and 3 is 80 A. </p>
+    <img src="A5_Q2.PNG"/>
+    <p>Q2: Draw a schematic for a circuit with using at least your arduino, a DC motor, a flyback diode, and capacitors between power and ground. Find parts with datasheets you could use for each of these schematic components. </p>
+    <p>Q3: Here is the datasheet for the L293D chip: https://www.ti.com/product/L293DLinks to an external site.. Draw a schematic using at least your arduino, this chip, and two motors. Write (pseudo) code that shows how you would move the motors both forward, both back, then one forward one back, and one back then forward. </p>
+  </body>
+</html>
