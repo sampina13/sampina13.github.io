@@ -1,6 +1,7 @@
 const BAUD_RATE = 9600; // This should match the baud rate in your Arduino sketch
 const MIN_CIRCLES = 6;
 const MAX_CIRCLES = 50;
+
 let port, connectBtn, rotation; // Declare global variables
 
 function setup() {
